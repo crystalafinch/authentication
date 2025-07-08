@@ -1,0 +1,33 @@
+# Node dependencies
+node_modules/
+dist/
+tmp/
+build/
+
+# Nx and Vite cache
+.nx/
+.vite/
+.vitest/
+coverage/
+.cache/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Environment files
+.env
+.env.*.local
+
+# IDEs & editors
+.vscode/
+.idea/
+.DS_Store
+
+# OS
+Thumbs.db
+
+# Optional: test output
+*.tsbuildinfo
