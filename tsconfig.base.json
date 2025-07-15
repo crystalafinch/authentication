@@ -14,7 +14,10 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@/*": ["apps/frontend/src/app/*"],
+      "@ui/*": ["apps/frontend/src/app/components/ui/*"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

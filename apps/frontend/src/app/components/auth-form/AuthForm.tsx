@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import { Input } from '@ui/input';
 
 export type AuthFormProps = {
   endpoint: 'login' | 'signup';
@@ -23,7 +24,7 @@ function AuthForm({ endpoint }: AuthFormProps) {
   return (
     <form onSubmit={handleSubmit}>
       <label htmlFor="emailInput">Email</label>
-      <input
+      <Input
         type="email"
         name="email"
         value={email}
@@ -33,7 +34,7 @@ function AuthForm({ endpoint }: AuthFormProps) {
         required
       />
       <label htmlFor="passwordInput">Password</label>
-      <input
+      <Input
         type="password"
         name="password"
         value={password}
