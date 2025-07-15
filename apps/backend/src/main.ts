@@ -1,15 +1,18 @@
 import express from 'express';
 import cors from 'cors';
 import { authRouter } from './routes/auth';
+import dotenv from 'dotenv';
 
-const host = process.env.HOST ?? 'localhost';
-const port = process.env.PORT ? Number(process.env.PORT) : 3000;
-const portFE = process.env.PORT_FE ? Number(process.env.PORT_FE) : 4200;
+dotenv.config();
+
+const API_URL = process.env.API_URL;
+const API_PORT = Number(process.env.API_PORT);
+const FE_PORT = process.env.FE_PORT;
 
 const app = express();
 
 const corsOptions = {
-  origin: `http://${host}:${portFE}`,
+  origin: `${API_URL}:${FE_PORT}`,
   optionsSuccessStatus: 200,
 };
 app.use(cors(corsOptions));
@@ -18,6 +21,6 @@ app.use(express.json());
 
 app.use('/api/auth', authRouter);
 
-app.listen(port, host, () => {
-  console.log(`[ ready ] http://${host}:${port}`);
+app.listen(API_PORT, API_URL, () => {
+  console.log(`[ ready ] ${API_URL}:${API_PORT}`);
 });

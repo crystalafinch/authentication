@@ -26,8 +26,21 @@
         }
       },
       "configurations": {
-        "development": {},
+        "development": {
+          "fileReplacements": [
+            {
+              "replace": "apps/backend/.env",
+              "with": "apps/backend/.env.development"
+            }
+          ]
+        },
         "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/backend/.env",
+              "with": "apps/backend/.env.production"
+            }
+          ],
           "esbuildOptions": {
             "sourcemap": false,
             "outExtension": {
