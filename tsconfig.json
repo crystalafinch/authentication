@@ -3,7 +3,8 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./apps/frontend/src/*"]
+      "@/*": ["./apps/frontend/src/*"],
+      "@ui/*": ["apps/frontend/src/app/components/ui/*"]
     }
   }
 }

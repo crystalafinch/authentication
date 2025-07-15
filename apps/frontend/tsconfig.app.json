@@ -10,7 +10,8 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@ui/*": ["./src/app/components/ui/*"]
     }
   },
   "exclude": [
