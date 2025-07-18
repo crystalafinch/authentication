@@ -1,16 +1,18 @@
 import { Routes, Route } from 'react-router-dom';
-import AuthForm from '../auth-form/AuthForm';
 import AuthorizedRoute from '../authorized-route/AuthorizedRoute';
+import AuthLayout from '../auth-layout/AuthLayout';
+import SignInForm from '../signin-form/SignInForm';
+import SignUpForm from '../signup-form/SignUpForm';
 
 function AppRoutes() {
   return (
     <Routes>
       <Route element={<AuthorizedRoute />}>
         <Route
-          path="/"
+          path="/dashboard"
           element={
             <div>
-              <h1>Dashboard</h1>
+              <h1 className="text-2xl font-bold">Dashboard</h1>
             </div>
           }
         />
@@ -18,28 +20,26 @@ function AppRoutes() {
           path="/profile"
           element={
             <div>
-              <h1>Profile</h1>
+              <h1 className="text-2xl font-bold">Profile</h1>
             </div>
           }
         />
       </Route>
 
       <Route
-        path="/login"
+        path="/signin"
         element={
-          <div>
-            <h1>Login</h1>
-            <AuthForm endpoint="login" />
-          </div>
+          <AuthLayout>
+            <SignInForm />
+          </AuthLayout>
         }
       />
       <Route
         path="/signup"
         element={
-          <div>
-            <h1>Signup</h1>
-            <AuthForm endpoint="signup" />
-          </div>
+          <AuthLayout>
+            <SignUpForm />
+          </AuthLayout>
         }
       />
     </Routes>

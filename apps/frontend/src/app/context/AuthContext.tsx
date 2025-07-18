@@ -5,8 +5,9 @@ import { useAnnouncer } from '../components/aria-announcer/AriaAnnouncer';
 interface AuthContextType {
   token: string;
   user: any; // TODO: define type
-  doLogin: (data: { email: string; password: string }) => Promise<void>;
-  logOut: () => void;
+  signIn: (data: { email: string; password: string }) => Promise<void>;
+  signOut: () => void;
+  signUp: (data: { email: string; password: string }) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -17,9 +18,9 @@ function AuthProvider({ children }: { children: ReactNode }) {
   const navigate = useNavigate();
   const announce = useAnnouncer();
 
-  const doLogin = async (data: { email: string; password: string }) => {
+  const signIn = async (data: { email: string; password: string }) => {
     try {
-      const response = await fetch('http://localhost:3000/api/auth/login', {
+      const response = await fetch('http://localhost:3000/api/auth/signin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -34,7 +35,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
 
       if (res.data) {
         setUser(res.data.user);
-        setToken(res.token);
+        setToken(res.data.token);
         localStorage.setItem('userToken', res.token);
         navigate('/dashboard');
         return;
@@ -45,15 +46,44 @@ function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const logOut = () => {
+  const signOut = () => {
     setUser(null);
     setToken('');
     localStorage.removeItem('userToken');
-    navigate('/login');
+    navigate('/signin');
+  };
+
+  // TODO: expand onboarding flow, not just email/password
+  const signUp = async (data: { email: string; password: string }) => {
+    try {
+      const response = await fetch('http://localhost:3000/api/auth/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+      const res = await response.json();
+
+      if (!res.ok) {
+        throw Error(res.error);
+      }
+
+      if (res.data) {
+        setUser(res.data.user);
+        setToken(res.data.token);
+        localStorage.setItem('userToken', res.token);
+        navigate('/dashboard');
+        return;
+      }
+    } catch (err) {
+      console.error(err); // TODO: Sentry
+      announce(`${err}`, 'assertive');
+    }
   };
 
   return (
-    <AuthContext value={{ token, user, doLogin, logOut }}>
+    <AuthContext value={{ token, user, signIn, signOut, signUp }}>
       {children}
     </AuthContext>
   );

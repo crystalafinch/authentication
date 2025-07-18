@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+const API_SCHEME = process.env.API_SCHEME;
 const API_URL = process.env.API_URL;
 const API_PORT = Number(process.env.API_PORT);
 const FE_PORT = process.env.FE_PORT;
@@ -12,7 +13,7 @@ const FE_PORT = process.env.FE_PORT;
 const app = express();
 
 const corsOptions = {
-  origin: `${API_URL}:${FE_PORT}`,
+  origin: `${API_SCHEME}://${API_URL}:${FE_PORT}`,
   optionsSuccessStatus: 200,
 };
 app.use(cors(corsOptions));

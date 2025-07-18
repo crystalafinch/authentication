@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
 const users = new Map<string, { password: string }>();
-const JWT_SECRET = process.env.JWT_SECRET ?? 'secret'; // TODO: Remove
+const JWT_SECRET = process.env.JWT_SECRET;
 
 export const authRouter = Router();
 
@@ -17,10 +17,11 @@ authRouter.post('/signup', async (req, res) => {
   const hash = await bcrypt.hash(password, 10);
   users.set(email, { password: hash });
 
-  res.status(201).json({ message: 'User created' });
+  const token = jwt.sign({ email }, JWT_SECRET);
+  res.status(201).json({ ok: true, data: { user: { email }, token } });
 });
 
-authRouter.post('/login', async (req, res) => {
+authRouter.post('/signin', async (req, res) => {
   const { email, password } = req.body;
 
   if (!validator.isEmail(email)) {
@@ -32,5 +33,5 @@ authRouter.post('/login', async (req, res) => {
     return res.status(401).json({ error: 'Invalid credentials' });
   }
   const token = jwt.sign({ email }, JWT_SECRET);
-  res.json({ token });
+  res.json({ ok: true, data: { user: { email }, token } });
 });

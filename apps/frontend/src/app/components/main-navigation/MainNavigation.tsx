@@ -15,15 +15,15 @@ const MainNavigation = () => {
         </li>
         {auth?.token ? (
           <li>
-            <Link to="/login">Logout</Link>
+            <button onClick={auth?.signOut}>Sign Out</button>
           </li>
         ) : (
           <>
             <li>
-              <Link to="/login">Login</Link>
+              <Link to="/signin">Sign In</Link>
             </li>
             <li>
-              <Link to="/signup">Signup</Link>
+              <Link to="/signup">Sign Up</Link>
             </li>
           </>
         )}
