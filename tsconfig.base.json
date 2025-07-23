@@ -2,6 +2,7 @@
   "compileOnSave": false,
   "compilerOptions": {
     "rootDir": ".",
+    "strict": true,
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",
@@ -13,11 +14,16 @@
     "lib": ["es2020", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
+    "allowUnreachableCode": false,
+    "alwaysStrict": true,
+    "noImplicitAny": true,
+    "noPropertyAccessFromIndexSignature": true,
     "baseUrl": ".",
     "paths": {
       "@/*": ["apps/frontend/src/app/*"],
       "@ui/*": ["apps/frontend/src/app/components/ui/*"]
-    }
+    },
+    "typeRoots": ["./types", "./node_modules/@types"]
   },
   "exclude": ["node_modules", "tmp"]
 }
