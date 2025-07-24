@@ -28,8 +28,10 @@
     "src/**/*.jsx",
     "src/**/*.ts",
     "src/**/*.tsx",
-    "../../types/**/*.d.ts",
     "../../node_modules/@nx/react/typings/cssmodule.d.ts",
-    "../../node_modules/@nx/react/typings/image.d.ts"
+    "../../node_modules/@nx/react/typings/image.d.ts",
+    "../../node_modules/vite/client.d.ts",
+    "../../types/vite-env.d.ts",
+    "../../types/**/*.d.ts"
   ]
 }

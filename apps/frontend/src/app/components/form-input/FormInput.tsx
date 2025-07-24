@@ -8,6 +8,7 @@ function FormInput({
   label,
   value,
   changeFn,
+  blurFn,
   required = false,
   errorMessage = '',
   autoComplete = '',
@@ -20,6 +21,7 @@ function FormInput({
   label: string;
   value: string;
   changeFn: (value: string) => void;
+  blurFn?: (event: React.FocusEvent<HTMLInputElement>) => void;
   required: boolean;
   autoComplete?: string;
   errorMessage?: string;
@@ -53,6 +55,7 @@ function FormInput({
         name={name}
         value={value}
         onChange={(e) => changeFn(e.target.value)}
+        onBlur={blurFn}
         autoComplete={autoComplete}
         id={inputId}
         className="aria-invalid:border-red-700 aria-invalid:bg-red-50"

@@ -2,12 +2,14 @@ import { useContext, createContext, useState, ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAnnouncer } from '../components/aria-announcer/AriaAnnouncer';
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 interface AuthContextType {
   token: string;
   user: any; // TODO: define type
   signIn: (data: { email: string; password: string }) => Promise<void>;
   signOut: () => void;
-  signUp: (data: { email: string; password: string }) => Promise<void>;
+  createAccount: (data: { email: string; password: string }) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -20,7 +22,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
 
   const signIn = async (data: { email: string; password: string }) => {
     try {
-      const response = await fetch('http://localhost:3000/api/auth/signin', {
+      const response = await fetch(`${API_URL}/api/auth/signin`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -54,9 +56,9 @@ function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   // TODO: expand onboarding flow, not just email/password
-  const signUp = async (data: { email: string; password: string }) => {
+  const createAccount = async (data: { email: string; password: string }) => {
     try {
-      const response = await fetch('http://localhost:3000/api/auth/signup', {
+      const response = await fetch(`${API_URL}/api/auth/create-account`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -83,7 +85,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <AuthContext value={{ token, user, signIn, signOut, signUp }}>
+    <AuthContext value={{ token, user, signIn, signOut, createAccount }}>
       {children}
     </AuthContext>
   );

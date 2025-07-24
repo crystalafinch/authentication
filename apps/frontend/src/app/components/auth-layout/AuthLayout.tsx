@@ -1,8 +1,8 @@
 function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="h-screen p-4 box-border flex gap-4 items-center justify-center">
+    <div className="h-screen box-border flex gap-4 items-center justify-center">
       {children}
-      <div className="bg-gray-200 grow h-full rounded-3xl w-2xl"></div>
+      <div className="bg-gray-200 grow h-full w-2xl"></div>
     </div>
   );
 }

@@ -7,23 +7,25 @@ const MainNavigation = () => {
   return (
     <div role="navigation">
       <ul>
-        <li>
-          <Link to="/">Dashboard</Link>
-        </li>
-        <li>
-          <Link to="/profile">Profile</Link>
-        </li>
         {auth?.token ? (
-          <li>
-            <button onClick={auth?.signOut}>Sign Out</button>
-          </li>
+          <>
+            <li>
+              <Link to="/dashboard">Dashboard</Link>
+            </li>
+            <li>
+              <Link to="/profile">Profile</Link>
+            </li>
+            <li>
+              <button onClick={auth?.signOut}>Sign Out</button>
+            </li>
+          </>
         ) : (
           <>
             <li>
-              <Link to="/signin">Sign In</Link>
+              <Link to="/signin">Sign in</Link>
             </li>
             <li>
-              <Link to="/signup">Sign Up</Link>
+              <Link to="/create-account">Create account</Link>
             </li>
           </>
         )}

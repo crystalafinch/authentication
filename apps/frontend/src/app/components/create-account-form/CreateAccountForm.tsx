@@ -1,14 +1,16 @@
 import { useRef, useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { Button } from '@ui/button';
-import FormInput from '../form-input/FormInput';
-import ErrorSummary from '../error-summary/ErrorSummary';
-import { FormErrors } from '../../lib/types';
-import { SignInSchema } from '../../schemas/sign-in';
 import { Link } from 'react-router-dom';
+import ErrorSummary from '../error-summary/ErrorSummary';
+import { FormErrors } from '@/app/lib/types';
+import RequiredAsterisk from '../required-asterisk/RequiredAsterisk';
+import FormInput from '../form-input/FormInput';
+import PasswordCriteria from '../password-criteria/PasswordCriteria';
+import { CreateAccountSchema } from '@/app/schemas/create-account';
 import { validate } from '@/app/lib/forms';
 
-function SignInForm() {
+function CreateAccountForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState<FormErrors>({});
@@ -16,7 +18,7 @@ function SignInForm() {
   const auth = useAuth();
 
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    const errors = validate({ email, password }, SignInSchema);
+    const errors = validate({ email, password }, CreateAccountSchema);
     if (errors) {
       setErrors(errors);
     } else {
@@ -27,7 +29,7 @@ function SignInForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const errors = validate({ email, password }, SignInSchema);
+    const errors = validate({ email, password }, CreateAccountSchema);
     if (errors) {
       setErrors(errors);
       if (errorSummary.current) {
@@ -36,17 +38,21 @@ function SignInForm() {
       return;
     }
 
-    await auth?.signIn({ email, password });
+    // TODO: expand onboarding flow, not just email/password
+    await auth?.createAccount({ email, password });
   };
 
   return (
     <div className="flex grow justify-center">
       <div className="w-sm p-6">
-        <h1 className="font-medium mb-1 text-2xl text-center">Sign in</h1>
-        <p className="mb-6 text-xs text-center text-gray-500">
-          Don't have an account?{' '}
-          <Link to="/create-account" className="underline">
-            Create account
+        <h1 className="font-medium mb-1 text-2xl text-center">
+          Create account
+        </h1>
+
+        <p className="mb-4 text-xs text-center text-gray-500">
+          Already have an account?{' '}
+          <Link to="/signin" className="underline">
+            Sign in
           </Link>
         </p>
 
@@ -56,22 +62,23 @@ function SignInForm() {
             variant="outline"
             className="rounded-sm w-full mb-2"
           >
-            Sign in with Google
+            Continue with Google
           </Button>
           <Button
             type="button"
             variant="outline"
             className="rounded-sm w-full mb-2"
           >
-            Sign in with Github
+            Continue with Github
           </Button>
         </div>
         <form onSubmit={handleSubmit} noValidate>
           <p className="before:content-[''] before:block before:w-full before:h-[1px] before:bg-gray-200 after:content-[''] after:block after:w-full after:h-[1px] after:bg-gray-200 flex gap-2 items-center relative mb-1 text-sm text-center text-gray-500 whitespace-nowrap">
-            Sign in with email
+            Create account with email
           </p>
           <p className="mb-4 text-xs text-center text-gray-500">
-            All fields are required
+            Required fields are marked with an asterisk{' '}
+            <RequiredAsterisk showSrOnly={false} />
           </p>
 
           <ErrorSummary errorMessages={errors} ref={errorSummary} />
@@ -87,7 +94,6 @@ function SignInForm() {
             autoComplete="email"
             errorMessage={errors['emailInput']}
           />
-
           <FormInput
             name="password"
             type="password"
@@ -98,27 +104,15 @@ function SignInForm() {
             required={true}
             autoComplete="password"
             errorMessage={errors['passwordInput']}
+            description={<PasswordCriteria password={password} />}
           />
-
           <Button type="submit" className="rounded-4xl w-full">
-            Sign in
+            Sign up
           </Button>
         </form>
-        <ul className="justify-center flex gap-4 mt-4 text-xs text-center text-gray-500">
-          <li>
-            <Link to="/privacy-policy" className="underline">
-              Privacy Policy
-            </Link>
-          </li>
-          <li>
-            <Link to="/terms-and-conditions" className="underline">
-              Terms and Conditions
-            </Link>
-          </li>
-        </ul>
       </div>
     </div>
   );
 }
 
-export default SignInForm;
+export default CreateAccountForm;

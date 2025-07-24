@@ -8,7 +8,7 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 export const authRouter = Router();
 
-authRouter.post('/signup', async (req, res) => {
+authRouter.post('/create-account', async (req, res) => {
   const { email, password } = req.body;
   if (users.has(email)) {
     return res.status(409).json({ error: 'User already exists' });
