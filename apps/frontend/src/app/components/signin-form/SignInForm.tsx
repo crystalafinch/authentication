@@ -11,6 +11,7 @@ import { validate } from '@/app/lib/forms';
 function SignInForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<FormErrors>({});
   const errorSummary = useRef<HTMLDivElement>(null);
   const auth = useAuth();
@@ -27,6 +28,10 @@ function SignInForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (isLoading) return;
+
+    setIsLoading(true);
+
     const errors = validate({ email, password }, SignInSchema);
     if (errors) {
       setErrors(errors);
@@ -37,6 +42,7 @@ function SignInForm() {
     }
 
     await auth?.signIn({ email, password });
+    setIsLoading(false);
   };
 
   return (
@@ -100,8 +106,8 @@ function SignInForm() {
             errorMessage={errors['passwordInput']}
           />
 
-          <Button type="submit" className="rounded-4xl w-full">
-            Sign in
+          <Button type="submit" loading={isLoading}>
+            {isLoading ? <>Signing in&hellip;</> : 'Sign in'}
           </Button>
         </form>
         <ul className="justify-center flex gap-4 mt-4 text-xs text-center text-gray-500">

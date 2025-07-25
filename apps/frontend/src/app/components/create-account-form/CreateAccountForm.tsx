@@ -13,6 +13,7 @@ import { validate } from '@/app/lib/forms';
 function CreateAccountForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<FormErrors>({});
   const errorSummary = useRef<HTMLDivElement>(null);
   const auth = useAuth();
@@ -29,6 +30,10 @@ function CreateAccountForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (isLoading) return;
+
+    setIsLoading(true);
+
     const errors = validate({ email, password }, CreateAccountSchema);
     if (errors) {
       setErrors(errors);
@@ -40,6 +45,7 @@ function CreateAccountForm() {
 
     // TODO: expand onboarding flow, not just email/password
     await auth?.createAccount({ email, password });
+    setIsLoading(false);
   };
 
   return (
@@ -106,8 +112,8 @@ function CreateAccountForm() {
             errorMessage={errors['passwordInput']}
             description={<PasswordCriteria password={password} />}
           />
-          <Button type="submit" className="rounded-4xl w-full">
-            Sign up
+          <Button type="submit" loading={isLoading}>
+            {isLoading ? <>Creating account&hellip;</> : 'Create account'}
           </Button>
         </form>
       </div>

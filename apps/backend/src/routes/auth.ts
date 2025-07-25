@@ -2,6 +2,7 @@ import { Router } from 'express';
 import validator from 'validator';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import { sleep } from '../utils';
 
 const users = new Map<string, { password: string }>();
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -10,6 +11,8 @@ export const authRouter = Router();
 
 authRouter.post('/create-account', async (req, res) => {
   const { email, password } = req.body;
+  await sleep(3000);
+
   if (users.has(email)) {
     return res.status(409).json({ error: 'User already exists' });
   }
@@ -23,6 +26,7 @@ authRouter.post('/create-account', async (req, res) => {
 
 authRouter.post('/signin', async (req, res) => {
   const { email, password } = req.body;
+  await sleep(3000);
 
   if (!validator.isEmail(email)) {
     return res.status(400).json({ error: 'Invalid email' });
