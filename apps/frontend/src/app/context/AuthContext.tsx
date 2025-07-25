@@ -1,6 +1,7 @@
 import { useContext, createContext, useState, ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAnnouncer } from '../components/aria-announcer/AriaAnnouncer';
+import * as Sentry from '@sentry/react';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -43,7 +44,11 @@ function AuthProvider({ children }: { children: ReactNode }) {
         return;
       }
     } catch (err) {
-      console.error(err); // TODO: Sentry
+      console.error(err);
+      Sentry.setContext('login_attempt', {
+        email: data.email,
+      });
+      Sentry.captureException(err);
       announce(`${err}`, 'assertive');
     }
   };
@@ -79,7 +84,11 @@ function AuthProvider({ children }: { children: ReactNode }) {
         return;
       }
     } catch (err) {
-      console.error(err); // TODO: Sentry
+      console.error(err);
+      Sentry.setContext('create_account_attempt', {
+        email: data.email,
+      });
+      Sentry.captureException(err);
       announce(`${err}`, 'assertive');
     }
   };
