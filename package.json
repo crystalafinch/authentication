@@ -2,7 +2,6 @@
   "name": "authentication",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
     "start:fe:dev": "cross-env NODE_ENV=development nx serve frontend",
     "start:fe:prod": "cross-env NODE_ENV=production nx serve frontend",
