@@ -1,4 +1,5 @@
 @import 'tailwind-globals';
 
-:[aria-live="assertive"]:not(:empty) {
+::selection {
+  @apply bg-yellow-100 text-black;
 }
