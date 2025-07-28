@@ -1,7 +1,7 @@
 {
-  "name": "backend",
+  "name": "server",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/backend/src",
+  "sourceRoot": "apps/server/src",
   "projectType": "application",
   "tags": [],
   "targets": {
@@ -11,12 +11,12 @@
       "defaultConfiguration": "production",
       "options": {
         "platform": "node",
-        "outputPath": "dist/backend",
+        "outputPath": "dist/server",
         "format": ["cjs"],
         "bundle": false,
-        "main": "apps/backend/src/main.ts",
-        "tsConfig": "apps/backend/tsconfig.app.json",
-        "assets": ["apps/backend/src/assets"],
+        "main": "apps/server/src/main.ts",
+        "tsConfig": "apps/server/tsconfig.app.json",
+        "assets": ["apps/server/src/assets"],
         "generatePackageJson": true,
         "esbuildOptions": {
           "sourcemap": true,
@@ -29,16 +29,16 @@
         "development": {
           "fileReplacements": [
             {
-              "replace": "apps/backend/.env",
-              "with": "apps/backend/.env.development"
+              "replace": "apps/server/.env",
+              "with": "apps/server/.env.development"
             }
           ]
         },
         "production": {
           "fileReplacements": [
             {
-              "replace": "apps/backend/.env",
-              "with": "apps/backend/.env.production"
+              "replace": "apps/server/.env",
+              "with": "apps/server/.env.production"
             }
           ],
           "esbuildOptions": {
@@ -56,15 +56,15 @@
       "defaultConfiguration": "development",
       "dependsOn": ["build"],
       "options": {
-        "buildTarget": "backend:build",
+        "buildTarget": "server:build",
         "runBuildTargetDependencies": false
       },
       "configurations": {
         "development": {
-          "buildTarget": "backend:build:development"
+          "buildTarget": "server:build:development"
         },
         "production": {
-          "buildTarget": "backend:build:production"
+          "buildTarget": "server:build:production"
         }
       }
     },

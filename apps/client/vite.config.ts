@@ -8,7 +8,7 @@ import path from 'path';
 
 export default defineConfig(() => ({
   root: __dirname,
-  cacheDir: '../node_modules/.vite/apps/frontend',
+  cacheDir: '../node_modules/.vite/apps/client',
   server: {
     port: 4200,
     host: 'localhost',
@@ -38,7 +38,7 @@ export default defineConfig(() => ({
   //  plugins: [ nxViteTsPaths() ],
   // },
   build: {
-    outDir: '../dist/apps/frontend',
+    outDir: '../dist/apps/client',
     emptyOutDir: true,
     reportCompressedSize: true,
     commonjsOptions: {
@@ -53,7 +53,7 @@ export default defineConfig(() => ({
     include: ['{src,tests}/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
     reporters: ['default'],
     coverage: {
-      reportsDirectory: '../coverage/apps/frontend',
+      reportsDirectory: '../coverage/apps/client',
       provider: 'v8' as const,
     },
   },

@@ -3,14 +3,14 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start:fe:dev": "cross-env NODE_ENV=development nx serve frontend",
-    "start:fe:prod": "cross-env NODE_ENV=production nx serve frontend",
-    "start:be:dev": "cross-env NODE_ENV=development nx serve backend",
-    "start:be:prod": "cross-env NODE_ENV=production nx serve backend",
-    "build:fe:dev": "nx build frontend --configuration=development",
-    "build:fe:prod": "nx build frontend --configuration=production",
-    "build:be:dev": "nx build backend --configuration=development",
-    "build:be:prod": "nx build backend --configuration=production"
+    "start:fe:dev": "cross-env NODE_ENV=development nx serve client",
+    "start:fe:prod": "cross-env NODE_ENV=production nx serve client",
+    "start:be:dev": "cross-env NODE_ENV=development nx serve server",
+    "start:be:prod": "cross-env NODE_ENV=production nx serve server",
+    "build:fe:dev": "nx build client --configuration=development",
+    "build:fe:prod": "nx build client --configuration=production",
+    "build:be:dev": "nx build server --configuration=development",
+    "build:be:prod": "nx build server --configuration=production"
   },
   "keywords": [],
   "author": "Crystal Finch",

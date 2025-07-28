@@ -1,9 +1,9 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "projects": {
-    "frontend": "apps/frontend",
-    "backend": "apps/backend",
-    "frontend-e2e": "apps/frontend-e2e"
+    "client": "apps/client",
+    "server": "apps/server",
+    "client-e2e": "apps/client-e2e"
   },
   "plugins": [
     {

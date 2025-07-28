@@ -1,16 +1,16 @@
 {
-  "name": "frontend",
+  "name": "client",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/frontend/src",
+  "sourceRoot": "apps/client/src",
   "projectType": "application",
   "tags": [],
-  "// targets": "to see all targets run: nx show project frontend --web",
+  "// targets": "to see all targets run: nx show project client --web",
   "targets": {
     "build": {
       "executor": "@nx/vite:build",
       "options": {
-        "outputPath": "dist/apps/frontend",
-        "configFile": "apps/frontend/vite.config.ts"
+        "outputPath": "dist/apps/client",
+        "configFile": "apps/client/vite.config.ts"
       }
     },
     "serve": {
@@ -18,11 +18,11 @@
       "defaultConfiguration": "development",
       "options": {
         "port": 4200,
-        "buildTarget": "frontend:build"
+        "buildTarget": "client:build"
       },
       "configurations": {
         "production": {
-          "buildTarget": "frontend:build:production"
+          "buildTarget": "client:build:production"
         }
       }
     }
