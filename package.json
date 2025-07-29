@@ -7,10 +7,10 @@
     "start:fe:prod": "cross-env NODE_ENV=production nx serve client",
     "start:be:dev": "cross-env NODE_ENV=development nx serve server",
     "start:be:prod": "cross-env NODE_ENV=production nx serve server",
-    "build:fe:dev": "nx build client --configuration=development",
-    "build:fe:prod": "nx build client --configuration=production",
-    "build:be:dev": "nx build server --configuration=development",
-    "build:be:prod": "nx build server --configuration=production"
+    "build:fe:dev": "cross-env NODE_ENV=development nx build client --configuration=development",
+    "build:fe:prod": "cross-env NODE_ENV=production nx build client --configuration=production",
+    "build:be:dev": "cross-env NODE_ENV=development nx build server --configuration=development",
+    "build:be:prod": "cross-env NODE_ENV=production nx build server --configuration=production"
   },
   "keywords": [],
   "author": "Crystal Finch",

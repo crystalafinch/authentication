@@ -18,8 +18,9 @@ yarn-debug.log*
 pnpm-debug.log*
 
 # Environment files
-.env
-.env.*
+apps/client/.env.development
+apps/server/.env
+apps/server/.env.development
 
 # IDEs & editors
 .vscode/

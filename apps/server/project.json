@@ -35,12 +35,6 @@
           ]
         },
         "production": {
-          "fileReplacements": [
-            {
-              "replace": "apps/server/.env",
-              "with": "apps/server/.env.production"
-            }
-          ],
           "esbuildOptions": {
             "sourcemap": false,
             "outExtension": {
