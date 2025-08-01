@@ -33,10 +33,6 @@ export default defineConfig(() => ({
       '@ui': path.resolve(__dirname, './src/app/components/ui'),
     },
   },
-  // Uncomment this if you are using workers.
-  // worker: {
-  //  plugins: [ nxViteTsPaths() ],
-  // },
   build: {
     outDir: '../dist/apps/client',
     emptyOutDir: true,

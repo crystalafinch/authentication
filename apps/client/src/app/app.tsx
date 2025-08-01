@@ -1,4 +1,3 @@
-// Uncomment this line to use CSS modules
 import styles from 'app.module.css';
 import AppRoutes from './components/app-routes/AppRoutes';
 import AppProviders from './components/app-providers/AppProviders';

@@ -3,56 +3,42 @@ import AuthorizedRoute from '../authorized-route/AuthorizedRoute';
 import AuthLayout from '../auth-layout/AuthLayout';
 import SignInForm from '../signin-form/SignInForm';
 import CreateAccountForm from '../create-account-form/CreateAccountForm';
+import Home from '../home/Home';
+import PublicRoute from '../public-route/PublicRoute';
+import Dashboard from '../dashboard/Dashboard';
 import { useAuth } from '@/app/context/AuthContext';
-import { Button } from '@ui/button';
-import MainNavigation from '../main-navigation/MainNavigation';
+import Profile from '../profile/Profile';
 
 function AppRoutes() {
   const auth = useAuth();
-
-  return (
+  const routes = (
     <Routes>
-      <Route path="/" element={<MainNavigation />} />
-      <Route element={<AuthorizedRoute />}>
+      <Route path="/" element={<Home />} />
+      <Route element={<PublicRoute />}>
         <Route
-          path="/dashboard"
+          path="signin"
           element={
-            <div>
-              <h1 className="text-2xl font-bold">Dashboard</h1>
-              <Button onClick={auth?.signOut} variant="outline">
-                Sign Out
-              </Button>
-            </div>
+            <AuthLayout>
+              <SignInForm />
+            </AuthLayout>
           }
         />
         <Route
-          path="/profile"
+          path="create-account"
           element={
-            <div>
-              <h1 className="text-2xl font-bold">Profile</h1>
-            </div>
+            <AuthLayout>
+              <CreateAccountForm />
+            </AuthLayout>
           }
         />
       </Route>
-
-      <Route
-        path="/signin"
-        element={
-          <AuthLayout>
-            <SignInForm />
-          </AuthLayout>
-        }
-      />
-      <Route
-        path="/create-account"
-        element={
-          <AuthLayout>
-            <CreateAccountForm />
-          </AuthLayout>
-        }
-      />
+      <Route element={<AuthorizedRoute />}>
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/profile" element={<Profile />} />
+      </Route>
     </Routes>
   );
+  return auth?.loading ? <></> : routes;
 }
 
 export default AppRoutes;

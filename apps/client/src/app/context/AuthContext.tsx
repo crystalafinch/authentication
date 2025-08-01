@@ -1,30 +1,75 @@
-import { useContext, createContext, useState, ReactNode } from 'react';
+import {
+  useContext,
+  createContext,
+  useState,
+  ReactNode,
+  useEffect,
+} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAnnouncer } from '../components/aria-announcer/AriaAnnouncer';
 import * as Sentry from '@sentry/react';
 
+// TODO: Move to shared lib
+export type User = {
+  id: string;
+  email: string;
+  password: string;
+  refreshTokenVersion: number;
+};
+
+export type UserSignInData = Pick<User, 'email' | 'password'>;
+
 const API_URL = import.meta.env.VITE_API_URL;
 
 interface AuthContextType {
-  token: string;
-  user: any; // TODO: define type
-  signIn: (data: { email: string; password: string }) => Promise<void>;
+  user: User | null;
+  loading: boolean;
+  signIn: (data: UserSignInData) => Promise<void>;
   signOut: () => void;
-  createAccount: (data: { email: string; password: string }) => Promise<void>;
+  createAccount: (data: UserSignInData) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
 function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState(null);
-  const [token, setToken] = useState(localStorage.getItem('userToken') ?? '');
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
   const navigate = useNavigate();
   const announce = useAnnouncer();
 
-  const signIn = async (data: { email: string; password: string }) => {
+  useEffect(() => {
+    checkAuth();
+  }, []);
+
+  const checkAuth = async () => {
+    try {
+      const response = await fetch(`${API_URL}/api/auth/check-auth`, {
+        credentials: 'include',
+      });
+      const res = await response.json();
+
+      if (!res.ok) {
+        throw Error(res.error);
+      }
+
+      if (res.data) {
+        setUser(res.data.user);
+        setLoading(false);
+      }
+    } catch (err) {
+      console.error(err);
+      Sentry.captureException(err);
+      announce(`${err}`, 'assertive');
+      setUser(null);
+      setLoading(false);
+    }
+  };
+
+  const signIn = async (data: UserSignInData) => {
     try {
       const response = await fetch(`${API_URL}/api/auth/signin`, {
         method: 'POST',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -38,8 +83,6 @@ function AuthProvider({ children }: { children: ReactNode }) {
 
       if (res.data) {
         setUser(res.data.user);
-        setToken(res.data.token);
-        localStorage.setItem('userToken', res.token);
         navigate('/dashboard');
         return;
       }
@@ -53,18 +96,33 @@ function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const signOut = () => {
+  const signOut = async () => {
+    try {
+      const response = await fetch(`${API_URL}/api/auth/signout`, {
+        method: 'POST',
+        credentials: 'include',
+      });
+      const res = await response.json();
+
+      if (!res.ok) {
+        throw Error(res.error);
+      }
+    } catch (err) {
+      console.error(err);
+      Sentry.captureException(err);
+      announce(`${err}`, 'assertive');
+    }
+
     setUser(null);
-    setToken('');
-    localStorage.removeItem('userToken');
     navigate('/signin');
   };
 
   // TODO: expand onboarding flow, not just email/password
-  const createAccount = async (data: { email: string; password: string }) => {
+  const createAccount = async (data: UserSignInData) => {
     try {
       const response = await fetch(`${API_URL}/api/auth/create-account`, {
         method: 'POST',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -78,8 +136,6 @@ function AuthProvider({ children }: { children: ReactNode }) {
 
       if (res.data) {
         setUser(res.data.user);
-        setToken(res.data.token);
-        localStorage.setItem('userToken', res.token);
         navigate('/dashboard');
         return;
       }
@@ -94,7 +150,15 @@ function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <AuthContext value={{ token, user, signIn, signOut, createAccount }}>
+    <AuthContext
+      value={{
+        user,
+        loading,
+        signIn,
+        signOut,
+        createAccount,
+      }}
+    >
       {children}
     </AuthContext>
   );

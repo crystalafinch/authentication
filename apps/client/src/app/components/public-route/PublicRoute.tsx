@@ -1,14 +1,14 @@
 import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext'; // TODO: tsconfig path
 
-const AuthorizedRoute = () => {
+const PublicRoute = () => {
   const auth = useAuth();
 
-  if (!auth?.user) {
-    return <Navigate to="/signin" />;
+  if (auth?.user) {
+    return <Navigate to="/dashboard" />;
   }
 
   return <Outlet />;
 };
 
-export default AuthorizedRoute;
+export default PublicRoute;

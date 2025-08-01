@@ -5,9 +5,10 @@ const MainNavigation = () => {
   const auth = useAuth();
 
   return (
-    <div role="navigation">
-      <ul>
-        {auth?.token ? (
+    <nav className="flex gap-4 items-center p-4">
+      <Link to="/">Home</Link>
+      <ul className="flex gap-4 items-center">
+        {auth?.user ? (
           <>
             <li>
               <Link to="/dashboard">Dashboard</Link>
@@ -30,7 +31,7 @@ const MainNavigation = () => {
           </>
         )}
       </ul>
-    </div>
+    </nav>
   );
 };
 
