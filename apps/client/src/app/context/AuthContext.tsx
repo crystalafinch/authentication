@@ -41,6 +41,11 @@ function AuthProvider({ children }: { children: ReactNode }) {
     checkAuth();
   }, []);
 
+  useEffect(() => {
+    window.addEventListener('storage', syncAuth);
+    return () => window.removeEventListener('storage', syncAuth);
+  }, []);
+
   const checkAuth = async () => {
     try {
       const response = await fetch(`${API_URL}/api/auth/check-auth`, {
@@ -65,6 +70,28 @@ function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  const syncAuth = (event: StorageEvent) => {
+    if (event.key === 'auth-event' && event.newValue) {
+      const { type } = JSON.parse(event.newValue);
+
+      if (type === 'signed-out') {
+        setUser(null);
+        navigate('/signin');
+      }
+
+      if (type === 'signed-in') {
+        checkAuth();
+      }
+    }
+  };
+
+  const syncTabs = (type: 'signed-in' | 'signed-out') => {
+    localStorage.setItem(
+      'auth-event',
+      JSON.stringify({ type, timestamp: Date.now() })
+    );
+  };
+
   const signIn = async (data: UserSignInData) => {
     try {
       const response = await fetch(`${API_URL}/api/auth/signin`, {
@@ -84,6 +111,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
       if (res.data) {
         setUser(res.data.user);
         navigate('/dashboard');
+        syncTabs('signed-in');
         return;
       }
     } catch (err) {
@@ -115,6 +143,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
 
     setUser(null);
     navigate('/signin');
+    syncTabs('signed-out');
   };
 
   // TODO: expand onboarding flow, not just email/password
@@ -137,6 +166,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
       if (res.data) {
         setUser(res.data.user);
         navigate('/dashboard');
+        syncTabs('signed-in');
         return;
       }
     } catch (err) {
