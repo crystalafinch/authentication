@@ -51,18 +51,20 @@ const cookieOptions = {
   domain: IS_PRODUCTION ? `.${API_URL}` : '',
 } as const;
 
-export const setAuthCookies = (res: Response, tokenData: TokenData) => {
+export const setAuthCookies = (res: Response, tokenData: TokenData): void => {
   const { accessToken, refreshToken } = createAuthTokens(tokenData);
   res.cookie('id', accessToken, cookieOptions);
   res.cookie('rid', refreshToken, cookieOptions);
 };
 
-export const clearAuthCookies = (res: Response) => {
+export const clearAuthCookies = (res: Response): void => {
   res.clearCookie('id', cookieOptions);
   res.clearCookie('rid', cookieOptions);
 };
 
-export const getUser = (identifier: string) => {
+export const getUser = (
+  identifier: string
+): { user: User; passwordHash: string | undefined } | undefined => {
   const getByEmail = validator.isEmail(identifier);
 
   const user = getByEmail
@@ -81,7 +83,7 @@ export const checkTokens = (
   res: Response,
   accessToken: string = '',
   refreshToken: string
-) => {
+): { user: User | null } => {
   // verify access token
   try {
     const data = <TokenData>(
