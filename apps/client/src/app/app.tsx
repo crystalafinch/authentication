@@ -1,4 +1,3 @@
-import styles from 'app.module.css';
 import AppRoutes from './components/app-routes/AppRoutes';
 import AppProviders from './components/app-providers/AppProviders';
 
