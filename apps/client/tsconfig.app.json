@@ -3,11 +3,7 @@
   "compilerOptions": {
     "outDir": "../dist/out-tsc",
     "types": ["node"],
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"],
-      "@ui/*": ["./src/app/components/ui/*"]
-    }
+    "baseUrl": "."
   },
   "exclude": [
     "src/**/*.spec.ts",

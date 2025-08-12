@@ -4,11 +4,7 @@
     "allowJs": false,
     "esModuleInterop": false,
     "allowSyntheticDefaultImports": true,
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"],
-      "@ui/*": ["./src/app/components/ui/*"]
-    }
+    "baseUrl": "."
   },
   "files": [],
   "include": [],
