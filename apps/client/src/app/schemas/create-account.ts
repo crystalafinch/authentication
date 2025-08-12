@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import PASSWORD_CRITERIA from '../consts/password-criteria';
+import PASSWORD_CRITERIA from '@/consts/password-criteria';
 
 const checkPassword = (password: string): boolean => {
   return PASSWORD_CRITERIA.every((c) => c.validator(password));

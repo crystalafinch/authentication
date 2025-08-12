@@ -1,10 +1,17 @@
 {
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
+    "module": "esnext",
+    "moduleResolution": "bundler",
     "jsx": "react-jsx",
     "allowJs": false,
     "esModuleInterop": false,
     "allowSyntheticDefaultImports": true,
-    "baseUrl": "."
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/app/*"],
+      "@ui/*": ["./src/app/components/ui/*"]
+    }
   },
   "files": [],
   "include": [],
@@ -15,6 +22,5 @@
     {
       "path": "./tsconfig.spec.json"
     }
-  ],
-  "extends": "../../tsconfig.base.json"
+  ]
 }

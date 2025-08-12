@@ -1,12 +1,12 @@
 import { useRef, useState } from 'react';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '@/context/AuthContext';
 import { Button } from '@ui/button';
 import FormInput from '../form-input/FormInput';
 import ErrorSummary from '../error-summary/ErrorSummary';
-import { FormErrors } from '../../lib/types';
-import { SignInSchema } from '../../schemas/sign-in';
+import { FormErrors } from '@/lib/types';
+import { SignInSchema } from '@/schemas/sign-in';
 import { Link } from 'react-router-dom';
-import { validate } from '@/app/lib/forms';
+import { validate } from '@/lib/forms';
 
 function SignInForm() {
   const [email, setEmail] = useState('');

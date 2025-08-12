@@ -6,7 +6,7 @@ import CreateAccountForm from '../create-account-form/CreateAccountForm';
 import Home from '../home/Home';
 import PublicRoute from '../public-route/PublicRoute';
 import Dashboard from '../dashboard/Dashboard';
-import { useAuth } from '@/app/context/AuthContext';
+import { useAuth } from '@/context/AuthContext';
 import Profile from '../profile/Profile';
 
 function AppRoutes() {

@@ -1,5 +1,5 @@
 import { Navigate, Outlet } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext'; // TODO: tsconfig path
+import { useAuth } from '@/context/AuthContext';
 
 const PublicRoute = () => {
   const auth = useAuth();

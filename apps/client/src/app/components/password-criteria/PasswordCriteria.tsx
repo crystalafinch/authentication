@@ -1,5 +1,5 @@
 import { Check, Minus } from 'lucide-react';
-import PASSWORD_CRITERIA from '@/app/consts/password-criteria';
+import PASSWORD_CRITERIA from '@/consts/password-criteria';
 
 function PasswordCriteria({ password }: { password: string }) {
   const criteria = PASSWORD_CRITERIA;

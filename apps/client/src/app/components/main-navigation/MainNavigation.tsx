@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext'; // TODO: tsconfig path
+import { useAuth } from '@/context/AuthContext';
 
 const MainNavigation = () => {
   const auth = useAuth();

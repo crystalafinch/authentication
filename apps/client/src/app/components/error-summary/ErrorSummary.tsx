@@ -1,5 +1,5 @@
 import type { Ref } from 'react';
-import { FormErrors } from '../../lib/types';
+import { FormErrors } from '@/lib/types';
 
 function ErrorSummary({
   errorMessages = {},

@@ -1,14 +1,14 @@
 import { useRef, useState } from 'react';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '@/context/AuthContext';
 import { Button } from '@ui/button';
 import { Link } from 'react-router-dom';
 import ErrorSummary from '../error-summary/ErrorSummary';
-import { FormErrors } from '@/app/lib/types';
+import { FormErrors } from '@/lib/types';
 import RequiredAsterisk from '../required-asterisk/RequiredAsterisk';
 import FormInput from '../form-input/FormInput';
 import PasswordCriteria from '../password-criteria/PasswordCriteria';
-import { CreateAccountSchema } from '@/app/schemas/create-account';
-import { validate } from '@/app/lib/forms';
+import { CreateAccountSchema } from '@/schemas/create-account';
+import { validate } from '@/lib/forms';
 
 function CreateAccountForm() {
   const [email, setEmail] = useState('');
