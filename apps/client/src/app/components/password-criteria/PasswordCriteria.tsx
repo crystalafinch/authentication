@@ -13,9 +13,9 @@ function PasswordCriteria({ password }: { password: string }) {
           return (
             <li className="flex items-center gap-2" key={index}>
               {isValid ? (
-                <Check className="w-4 h-4 text-green-600" />
+                <Check className="w-4 h-4 text-green-600" data-testid="check" />
               ) : (
-                <Minus className="w-4 h-4 text-gray-400" />
+                <Minus className="w-4 h-4 text-gray-400" data-testid="minus" />
               )}
               {item.text}
             </li>

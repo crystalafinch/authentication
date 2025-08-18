@@ -29,7 +29,7 @@ export default defineConfig(() => ({
   ],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'),
+      '@': path.resolve(__dirname, './src/app'),
       '@ui': path.resolve(__dirname, './src/app/components/ui'),
     },
   },
@@ -46,11 +46,19 @@ export default defineConfig(() => ({
     watch: false,
     globals: true,
     environment: 'jsdom',
+    setupFiles: ['./src/test-setup.ts'],
     include: ['{src,tests}/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
     reporters: ['default'],
     coverage: {
       reportsDirectory: '../coverage/apps/client',
       provider: 'v8' as const,
+    },
+    alias: {
+      '@': path.resolve(__dirname, './src/app'),
+      '@ui': path.resolve(__dirname, './src/app/components/ui'),
+      '@/consts': path.resolve(__dirname, './src/app/consts'),
+      '@/context': path.resolve(__dirname, './src/app/context'),
+      '@/lib': path.resolve(__dirname, './src/app/lib'),
     },
   },
 }));

@@ -62,7 +62,6 @@ function AuthProvider({ children }: { children: ReactNode }) {
         setLoading(false);
       }
     } catch (err) {
-      console.error(err);
       Sentry.captureException(err);
       announce(`${err}`, 'assertive');
       setUser(null);
@@ -115,7 +114,6 @@ function AuthProvider({ children }: { children: ReactNode }) {
         return;
       }
     } catch (err) {
-      console.error(err);
       Sentry.setContext('login_attempt', {
         email: data.email,
       });
@@ -136,7 +134,6 @@ function AuthProvider({ children }: { children: ReactNode }) {
         throw Error(res.error);
       }
     } catch (err) {
-      console.error(err);
       Sentry.captureException(err);
       announce(`${err}`, 'assertive');
     }
@@ -170,7 +167,6 @@ function AuthProvider({ children }: { children: ReactNode }) {
         return;
       }
     } catch (err) {
-      console.error(err);
       Sentry.setContext('create_account_attempt', {
         email: data.email,
       });

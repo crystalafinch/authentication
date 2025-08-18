@@ -10,7 +10,11 @@
     "build:fe:dev": "cross-env NODE_ENV=development nx build client --configuration=development",
     "build:fe:prod": "cross-env NODE_ENV=production nx build client --configuration=production",
     "build:be:dev": "cross-env NODE_ENV=development nx build server --configuration=development",
-    "build:be:prod": "cross-env NODE_ENV=production nx build server --configuration=production"
+    "build:be:prod": "cross-env NODE_ENV=production nx build server --configuration=production",
+    "test": "nx run client:test",
+    "test:watch": "nx run client:test --watch",
+    "test:coverage": "nx run client:test --coverage",
+    "test:ui": "nx run client:test --ui"
   },
   "keywords": [],
   "author": "Crystal Finch",
@@ -37,6 +41,7 @@
     "@swc/core": "~1.5.7",
     "@swc/helpers": "~0.5.11",
     "@testing-library/dom": "10.4.0",
+    "@testing-library/jest-dom": "^6.6.4",
     "@testing-library/react": "16.1.0",
     "@types/cookie-parser": "^1.4.9",
     "@types/cors": "^2.8.19",

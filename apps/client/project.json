@@ -24,6 +24,12 @@
           "buildTarget": "client:build:production"
         }
       }
+    },
+    "test": {
+      "executor": "@nx/vite:test",
+      "options": {
+        "configFile": "apps/client/vite.config.ts"
+      }
     }
   }
 }

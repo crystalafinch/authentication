@@ -36,17 +36,13 @@ function FormInput({
       <label htmlFor={inputId} className="font-medium">
         {label} {required && <RequiredAsterisk />}
       </label>
-      <p
-        id={errorId}
-        className={clsx(
-          'mb-1 text-red-700 text-xs',
-          !!errorMessage ? '' : 'hidden'
-        )}
-      >
-        {/* svg icon */}
-        <span className="sr-only">Error:</span>
-        {errorMessage}
-      </p>
+      {errorMessage && (
+        <p id={errorId} className="mb-1 text-red-700 text-xs">
+          {/* svg icon */}
+          <span className="sr-only">Error:</span>
+          {errorMessage}
+        </p>
+      )}
       {description && <div id={descriptionId}>{description}</div>}
       {children}
 
@@ -61,7 +57,12 @@ function FormInput({
         className="aria-invalid:border-red-700 aria-invalid:bg-red-50"
         aria-invalid={!!errorMessage}
         aria-required={required}
-        aria-describedby={`${errorId} ${descriptionId}`}
+        aria-describedby={[
+          errorMessage ? errorId : '',
+          description ? descriptionId : '',
+        ]
+          .filter(Boolean)
+          .join(' ')}
       />
     </div>
   );
