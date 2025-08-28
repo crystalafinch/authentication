@@ -33,12 +33,12 @@ function TestComponent() {
   return (
     <div>
       <div data-testid="user">
-        {auth?.user ? JSON.stringify(auth.user) : 'no-user'}
+        {auth?.state.user ? JSON.stringify(auth.state.user) : 'no-user'}
       </div>
-      <div data-testid="loading">{auth?.loading.toString()}</div>
+      <div data-testid="loading">{auth?.state.loading.toString()}</div>
       <button
         onClick={() =>
-          auth?.signIn({ email: 'test@test.com', password: 'password' })
+          auth?.signIn({ email: 'test@test.com', password: 'password' }, '/')
         }
       >
         Sign In
@@ -46,7 +46,10 @@ function TestComponent() {
       <button onClick={() => auth?.signOut()}>Sign Out</button>
       <button
         onClick={() =>
-          auth?.createAccount({ email: 'test@test.com', password: 'password' })
+          auth?.createAccount(
+            { email: 'test@test.com', password: 'password' },
+            '/'
+          )
         }
       >
         Create Account
@@ -215,7 +218,7 @@ describe('AuthContext', () => {
     });
 
     await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalledWith('/dashboard');
+      expect(mockNavigate).toHaveBeenCalledWith('/');
     });
   });
 
@@ -338,7 +341,7 @@ describe('AuthContext', () => {
     });
 
     await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalledWith('/dashboard');
+      expect(mockNavigate).toHaveBeenCalledWith('/');
     });
   });
 

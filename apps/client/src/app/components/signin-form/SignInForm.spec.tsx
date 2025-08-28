@@ -263,10 +263,13 @@ describe('SignInForm', () => {
     fireEvent.click(signInButton);
 
     await waitFor(() => {
-      expect(mockSignIn).toHaveBeenCalledWith({
-        email: 'new@email.com',
-        password: 'newpassword',
-      });
+      expect(mockSignIn).toHaveBeenCalledWith(
+        {
+          email: 'new@email.com',
+          password: 'newpassword',
+        },
+        '/'
+      );
     });
   });
 });

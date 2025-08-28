@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import AuthorizedRoute from '../authorized-route/AuthorizedRoute';
 import AuthLayout from '../auth-layout/AuthLayout';
 import SignInForm from '../signin-form/SignInForm';
@@ -11,6 +11,7 @@ import Profile from '../profile/Profile';
 
 function AppRoutes() {
   const auth = useAuth();
+  const location = useLocation();
   const routes = (
     <Routes>
       <Route path="/" element={<Home />} />
@@ -32,13 +33,17 @@ function AppRoutes() {
           }
         />
       </Route>
-      <Route element={<AuthorizedRoute />}>
+      <Route
+        element={
+          <AuthorizedRoute user={auth?.state.user} location={location} />
+        }
+      >
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/profile" element={<Profile />} />
       </Route>
     </Routes>
   );
-  return auth?.loading ? <></> : routes;
+  return auth?.state.loading ? <></> : routes;
 }
 
 export default AppRoutes;

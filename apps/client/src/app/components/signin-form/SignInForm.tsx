@@ -5,7 +5,7 @@ import FormInput from '../form-input/FormInput';
 import ErrorSummary from '../error-summary/ErrorSummary';
 import { FormErrors } from '@/lib/types';
 import { SignInSchema } from '@/schemas/sign-in';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { validate } from '@/lib/forms';
 
 function SignInForm() {
@@ -15,6 +15,7 @@ function SignInForm() {
   const [errors, setErrors] = useState<FormErrors>({});
   const errorSummary = useRef<HTMLDivElement>(null);
   const auth = useAuth();
+  const location = useLocation();
 
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     const errors = validate({ email, password }, SignInSchema);
@@ -41,7 +42,10 @@ function SignInForm() {
       return;
     }
 
-    await auth?.signIn({ email, password });
+    await auth?.signIn(
+      { email, password },
+      location.state?.from?.pathname || '/'
+    );
     setIsLoading(false);
   };
 

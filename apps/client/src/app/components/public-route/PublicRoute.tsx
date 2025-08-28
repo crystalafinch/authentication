@@ -4,7 +4,7 @@ import { useAuth } from '@/context/AuthContext';
 const PublicRoute = () => {
   const auth = useAuth();
 
-  if (auth?.user) {
+  if (auth?.state.user) {
     return <Navigate to="/dashboard" />;
   }
 

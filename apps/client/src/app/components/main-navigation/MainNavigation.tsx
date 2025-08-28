@@ -8,7 +8,7 @@ const MainNavigation = () => {
     <nav className="flex gap-4 items-center p-4">
       <Link to="/">Home</Link>
       <ul className="flex gap-4 items-center">
-        {auth?.user ? (
+        {auth?.state.user ? (
           <>
             <li>
               <Link to="/dashboard">Dashboard</Link>

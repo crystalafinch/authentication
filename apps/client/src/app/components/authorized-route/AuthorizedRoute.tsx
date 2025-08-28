@@ -1,14 +1,18 @@
-import { Navigate, Outlet } from 'react-router-dom';
-import { useAuth } from '@/context/AuthContext';
+import { Location, Navigate, Outlet } from 'react-router-dom';
+import { User } from '@/context/AuthContext';
 
-const AuthorizedRoute = () => {
-  const auth = useAuth();
-
-  if (!auth?.user) {
-    return <Navigate to="/signin" />;
+const AuthorizedRoute = ({
+  user,
+  location,
+}: {
+  user: User | null | undefined;
+  location: Location;
+}) => {
+  if (user) {
+    return <Outlet />;
   }
 
-  return <Outlet />;
+  return <Navigate to="/signin" replace state={{ from: location }} />;
 };
 
 export default AuthorizedRoute;

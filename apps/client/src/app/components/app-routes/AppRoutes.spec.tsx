@@ -54,7 +54,7 @@ describe('AppRoutes', () => {
   });
 
   it('should render loading state when auth is loading', () => {
-    mockUseAuth.mockReturnValue({ loading: true });
+    mockUseAuth.mockReturnValue({ state: { loading: true, user: null } });
 
     render(
       <BrowserRouter>
@@ -66,7 +66,7 @@ describe('AppRoutes', () => {
   });
 
   it('should render routes when not loading', () => {
-    mockUseAuth.mockReturnValue({ loading: false });
+    mockUseAuth.mockReturnValue({ state: { loading: false, user: null } });
 
     render(
       <BrowserRouter>
@@ -78,7 +78,7 @@ describe('AppRoutes', () => {
   });
 
   it('should render home route by default', () => {
-    mockUseAuth.mockReturnValue({ loading: false });
+    mockUseAuth.mockReturnValue({ state: { loading: false, user: null } });
 
     render(
       <MemoryRouter initialEntries={['/']}>
@@ -102,7 +102,7 @@ describe('AppRoutes', () => {
   });
 
   it('should render public route structure', () => {
-    mockUseAuth.mockReturnValue({ loading: false });
+    mockUseAuth.mockReturnValue({ state: { loading: false, user: null } });
 
     render(
       <MemoryRouter initialEntries={['/signin']}>
@@ -114,7 +114,7 @@ describe('AppRoutes', () => {
   });
 
   it('should render authorized route structure', () => {
-    mockUseAuth.mockReturnValue({ loading: false });
+    mockUseAuth.mockReturnValue({ state: { loading: false, user: null } });
 
     render(
       <MemoryRouter initialEntries={['/dashboard']}>
