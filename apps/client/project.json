@@ -30,6 +30,19 @@
       "options": {
         "configFile": "apps/client/vite.config.ts"
       }
+    },
+    "preview": {
+      "executor": "@nx/vite:preview-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "port": 4200,
+        "buildTarget": "client:build"
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "client:build:production"
+        }
+      }
     }
   }
 }
