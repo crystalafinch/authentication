@@ -41,6 +41,13 @@ export default defineConfig(() => ({
       transformMixedEsModules: true,
     },
     sourcemap: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          react: ['react', 'react-dom', 'react-router-dom'],
+        },
+      },
+    },
   },
   test: {
     watch: false,
