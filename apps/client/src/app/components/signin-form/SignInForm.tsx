@@ -7,6 +7,7 @@ import { FormErrors } from '@/lib/types';
 import { SignInSchema } from '@/schemas/sign-in';
 import { Link, useLocation } from 'react-router-dom';
 import { validate } from '@/lib/forms';
+import LegalParagraph from '../legal-paragraph/LegalParagraph';
 
 function SignInForm() {
   const [email, setEmail] = useState('');
@@ -114,18 +115,7 @@ function SignInForm() {
             {isLoading ? <>Signing in&hellip;</> : 'Sign in'}
           </Button>
         </form>
-        <ul className="justify-center flex gap-4 mt-4 text-xs text-center text-gray-500">
-          <li>
-            <Link to="/privacy-policy" className="underline">
-              Privacy Policy
-            </Link>
-          </li>
-          <li>
-            <Link to="/terms-and-conditions" className="underline">
-              Terms and Conditions
-            </Link>
-          </li>
-        </ul>
+        <LegalParagraph />
       </div>
     </div>
   );

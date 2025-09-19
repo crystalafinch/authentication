@@ -9,6 +9,7 @@ import FormInput from '../form-input/FormInput';
 import PasswordCriteria from '../password-criteria/PasswordCriteria';
 import { CreateAccountSchema } from '@/schemas/create-account';
 import { validate } from '@/lib/forms';
+import LegalParagraph from '../legal-paragraph/LegalParagraph';
 
 function CreateAccountForm() {
   const [email, setEmail] = useState('');
@@ -116,6 +117,8 @@ const [isLoading, setIsLoading] = useState(false);
             {isLoading ? <>Creating account&hellip;</> : 'Create account'}
           </Button>
         </form>
+
+        <LegalParagraph />
       </div>
     </div>
   );
