@@ -82,6 +82,7 @@
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.3",
+    "@radix-ui/react-tooltip": "^1.2.8",
     "@sentry/node": "^9.42.0",
     "@sentry/react": "^9.42.0",
     "@sentry/vite-plugin": "^4.0.1",
@@ -97,6 +98,7 @@
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.525.0",
+    "openai": "^5.22.0",
     "pg": "^8.16.3",
     "postcss": "^8.5.6",
     "react": "19.0.0",

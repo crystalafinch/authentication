@@ -46,7 +46,7 @@ test.describe('Home Page Authenticated', () => {
     await page.waitForTimeout(5000);
   });
 
-  test('has "Dashboard" link', async ({ page }) => {
-    await expect(page.getByRole('link', { name: 'Dashboard' })).toBeVisible();
+  test('has "Research" link', async ({ page }) => {
+    await expect(page.getByRole('link', { name: 'Research' })).toBeVisible();
   });
 });

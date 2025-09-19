@@ -1,17 +1,12 @@
-# Authentication
+# Reforge Demo
 
-Monorepo for home-rolled auth & OAuth experimentation 👻
+A demo app showing AI analysis for product teams
 
+- OpenAI API
 - TypeScript
-- Nx
 - React
 - Tailwind
-- Radix
-- Express
-- Vite
-- Zod
-- Sentry
 
 &nbsp;
 
-![Screenshot of client app](./assets/screenshot.png)
+![Screenshot of client app](./assets/screenshot-research.png)

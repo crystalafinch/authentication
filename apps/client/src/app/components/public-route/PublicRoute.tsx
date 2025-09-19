@@ -5,7 +5,7 @@ const PublicRoute = () => {
   const auth = useAuth();
 
   if (auth?.state.user) {
-    return <Navigate to="/dashboard" />;
+    return <Navigate to="/research" />;
   }
 
   return <Outlet />;

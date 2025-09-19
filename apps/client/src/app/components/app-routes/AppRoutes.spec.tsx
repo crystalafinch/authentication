@@ -40,12 +40,12 @@ vi.mock('../public-route/PublicRoute', () => ({
   ),
 }));
 
-vi.mock('../dashboard/Dashboard', () => ({
-  default: () => <div data-testid="dashboard">Dashboard</div>,
+vi.mock('../research/Research', () => ({
+  default: () => <div data-testid="research">Research</div>,
 }));
 
-vi.mock('../profile/Profile', () => ({
-  default: () => <div data-testid="profile">Profile</div>,
+vi.mock('../build/Build', () => ({
+  default: () => <div data-testid="build">Build</div>,
 }));
 
 describe('AppRoutes', () => {
@@ -117,7 +117,7 @@ describe('AppRoutes', () => {
     mockUseAuth.mockReturnValue({ state: { loading: false, user: null } });
 
     render(
-      <MemoryRouter initialEntries={['/dashboard']}>
+      <MemoryRouter initialEntries={['/research']}>
         <AppRoutes />
       </MemoryRouter>
     );

@@ -11,10 +11,10 @@ const MainNavigation = () => {
         {auth?.state.user ? (
           <>
             <li>
-              <Link to="/dashboard">Dashboard</Link>
+              <Link to="/research">Research</Link>
             </li>
             <li>
-              <Link to="/profile">Profile</Link>
+              <Link to="/build">Build</Link>
             </li>
             <li>
               <button onClick={auth?.signOut}>Sign Out</button>
