@@ -217,3 +217,28 @@ authRouter.post('/signout', (req, res) => {
   clearAuthCookies(res);
   res.json({ ok: true });
 });
+
+authRouter.delete('/user', async (req, res) => {
+  const { id, rid } = req.cookies;
+
+  try {
+    const { user } = checkTokens(res, id, rid);
+
+    if (!user) {
+      return res.status(401).json({ error: ERRORS.INVALID_CREDENTIALS });
+    }
+
+    // Delete the user from the users map
+    users.delete(user.id);
+
+    // Clear authentication cookies
+    clearAuthCookies(res);
+
+    res.json({ ok: true, message: 'User account deleted successfully' });
+  } catch (error) {
+    handleError(error, ERROR_CONTEXT.DELETE_ACCOUNT_ATTEMPT, {
+      userId: req.cookies?.id ? 'present' : 'missing',
+    });
+    return res.status(400).json({ error: ERRORS.INVALID_CREDENTIALS });
+  }
+});

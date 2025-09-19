@@ -44,7 +44,7 @@ const [isLoading, setIsLoading] = useState(false);
     }
 
     // TODO: expand onboarding flow, not just email/password
-    await auth?.createAccount({ email, password });
+    await auth?.createAccount({ email, password }, '/');
     setIsLoading(false);
   };
 

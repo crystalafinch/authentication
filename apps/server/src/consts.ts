@@ -15,4 +15,5 @@ export const ERRORS = {
 export const ERROR_CONTEXT = {
   SIGNIN_ATTEMPT: 'signin_attempt',
   CREATE_ACCOUNT_ATTEMPT: 'create_account_attempt',
+  DELETE_ACCOUNT_ATTEMPT: 'delete_account_attempt',
 };

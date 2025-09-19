@@ -20,19 +20,16 @@ export type User = {
 
 export type UserSignInData = Pick<User, 'email' | 'password'>;
 
-// Pure types for authentication state
 export interface AuthState {
   user: User | null;
   loading: boolean;
 }
 
-// Pure action types
 export type AuthAction =
   | { type: 'SET_USER'; payload: User | null }
   | { type: 'SET_LOADING'; payload: boolean }
   | { type: 'RESET_AUTH' };
 
-// Pure reducer function
 export const authReducer = (
   state: AuthState,
   action: AuthAction
@@ -49,49 +46,44 @@ export const authReducer = (
   }
 };
 
-// Pure initial state
 export const initialAuthState: AuthState = {
   user: null,
   loading: true,
 };
 
-// Pure service interface for external dependencies
 export interface AuthService {
   checkAuth: () => Promise<User | null>;
   signIn: (data: UserSignInData) => Promise<User>;
   signOut: () => Promise<void>;
   createAccount: (data: UserSignInData) => Promise<User>;
+  deleteAccount: () => Promise<void>;
 }
 
-// Pure navigation service interface
 export interface NavigationService {
   navigate: (to: string) => void;
   navigateToSignIn: () => void;
 }
 
-// Pure storage service interface
 export interface StorageService {
   syncTabs: (type: 'signed-in' | 'signed-out') => void;
   addStorageListener: (callback: (event: StorageEvent) => void) => () => void;
 }
 
-// Pure error handling service interface
 export interface ErrorService {
   captureException: (error: unknown, context?: Record<string, unknown>) => void;
   announce: (message: string, priority?: 'assertive' | 'polite') => void;
 }
 
-// Pure context interface
 interface AuthContextType {
   state: AuthState;
   signIn: (data: UserSignInData, from: string) => Promise<void>;
   signOut: () => Promise<void>;
   createAccount: (data: UserSignInData, from: string) => Promise<void>;
+  deleteAccount: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
-// Pure hook for using auth context
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
@@ -100,19 +92,16 @@ export const useAuth = () => {
   return context;
 };
 
-// Pure hook for accessing auth state
 export const useAuthState = () => {
   const { state } = useAuth();
   return state;
 };
 
-// Pure hook for accessing auth actions
 export const useAuthActions = () => {
-  const { signIn, signOut, createAccount } = useAuth();
-  return { signIn, signOut, createAccount };
+  const { signIn, signOut, createAccount, deleteAccount } = useAuth();
+  return { signIn, signOut, createAccount, deleteAccount };
 };
 
-// Pure component that manages state
 function AuthStateManager({
   children,
   authService,
@@ -128,7 +117,6 @@ function AuthStateManager({
 }) {
   const [state, dispatch] = useReducer(authReducer, initialAuthState);
 
-  // Pure effect for initial auth check
   useEffect(() => {
     const checkAuth = async () => {
       try {
@@ -147,7 +135,6 @@ function AuthStateManager({
     checkAuth();
   }, [authService, errorService]);
 
-  // Pure effect for storage sync
   useEffect(() => {
     const removeListener = storageService.addStorageListener((event) => {
       if (event.key === 'auth-event' && event.newValue) {
@@ -176,7 +163,6 @@ function AuthStateManager({
     return removeListener;
   }, [storageService, navigationService, authService, errorService]);
 
-  // Pure sign in function
   const signIn = useCallback(
     async (data: UserSignInData, from: string) => {
       try {
@@ -194,7 +180,6 @@ function AuthStateManager({
     [authService, navigationService, storageService, errorService]
   );
 
-  // Pure sign out function
   const signOut = useCallback(async () => {
     try {
       await authService.signOut();
@@ -208,7 +193,6 @@ function AuthStateManager({
     storageService.syncTabs('signed-out');
   }, [authService, navigationService, storageService, errorService]);
 
-  // Pure create account function
   const createAccount = useCallback(
     async (data: UserSignInData, from: string) => {
       try {
@@ -226,11 +210,25 @@ function AuthStateManager({
     [authService, navigationService, storageService, errorService]
   );
 
+  const deleteAccount = useCallback(async () => {
+    try {
+      await authService.deleteAccount();
+    } catch (err) {
+      errorService.captureException(err);
+      errorService.announce(`${err}`, 'assertive');
+    }
+
+    dispatch({ type: 'RESET_AUTH' });
+    navigationService.navigateToSignIn();
+    storageService.syncTabs('signed-out');
+  }, [authService, navigationService, storageService, errorService]);
+
   const contextValue: AuthContextType = {
     state,
     signIn,
     signOut,
     createAccount,
+    deleteAccount,
   };
 
   return (
@@ -238,12 +236,10 @@ function AuthStateManager({
   );
 }
 
-// Pure provider component that injects dependencies
 function AuthProvider({ children }: { children: ReactNode }) {
   const navigate = useNavigate();
   const announce = useAnnouncer();
 
-  // Create service implementations
   const authService: AuthService = {
     checkAuth: async () => {
       const API_URL = import.meta.env.VITE_API_URL;
@@ -313,6 +309,18 @@ function AuthProvider({ children }: { children: ReactNode }) {
       }
 
       return res.data.user;
+    },
+    deleteAccount: async () => {
+      const API_URL = import.meta.env.VITE_API_URL;
+      const response = await fetch(`${API_URL}/api/auth/user`, {
+        method: 'DELETE',
+        credentials: 'include',
+      });
+      const res = await response.json();
+
+      if (!res.ok) {
+        throw Error(res.error);
+      }
     },
   };
 
