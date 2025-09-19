@@ -17,6 +17,7 @@ coverage/
 npm-debug.log*
 yarn-debug.log*
 pnpm-debug.log*
+.last-run.json
 
 # Environment files
 apps/client/.env.development
